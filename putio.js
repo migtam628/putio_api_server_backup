@@ -60,7 +60,7 @@ app.get("/stream", (req, res) => {
               })
               .catch((err) => res.json(err));
           } else if (!file_id) {
-            let url = `http://185.186.246.43:5000/xtorrent?type=TV&title=${name}&s=${s}&e=${e}`
+            let url = `http://localhost:5000/xtorrent?type=TV&title=${name}&s=${s}&e=${e}`
             console.log(url);
             axios(url)
               .then((r) => {
@@ -138,7 +138,7 @@ app.get("/stream", (req, res) => {
               .catch((err) => res.json(err));
           } else if (!file_id) {
             axios(
-              `http://185.186.246.43:5000/imdb-torrent-search?id=${imdb_id}`
+              `http://localhost:5000/imdb-torrent-search?id=${imdb_id}`
             ).then((r) => {
               if (r.data.data.movie_count === 0) {
               } else if (r.data.data.movie_count >= 1) {
@@ -297,8 +297,8 @@ app.get("/get-transfers", (req, res) => {
 });
 
 /* 
-  Movies: http://185.186.246.43:3000/?type=movies&client_id=1234&token=XXYYZZXXYYZZXXYYZZXX&imdb_id=tt0848228&quality=1080p
-  Shows: http://185.186.246.43:3000/?type=tv&client_id=1234&token=XXYYZZXXYYZZXXYYZZXX&s=04&e=01&title=game+of+thrones
+  Movies: http://localhost:3000/?type=movies&client_id=1234&token=XXYYZZXXYYZZXXYYZZXX&imdb_id=tt0848228&quality=1080p
+  Shows: http://localhost:3000/?type=tv&client_id=1234&token=XXYYZZXXYYZZXXYYZZXX&s=04&e=01&title=game+of+thrones
 */
 
 app.get("/media_stream", (req, res) => {
@@ -321,7 +321,7 @@ app.get("/media_stream", (req, res) => {
   if (type === "tv") {
     console.log("TV");
     axios(
-      `http://185.186.246.43:5000/xtorrent?type=TV&title=${title}&s=${s}&e=${e}`
+      `http://localhost:5000/xtorrent?type=TV&title=${title}&s=${s}&e=${e}`
     )
       .then((r) => {
         const url = String(r.data.data.main_result.magnet); //.split("&dn=");
@@ -355,7 +355,7 @@ app.get("/media_stream", (req, res) => {
       });
   } else if (type === "movies") {
     console.log("MOVIES");
-    axios("http://185.186.246.43:5000/imdb-torrent-search?id=" + id)
+    axios("http://localhost:5000/imdb-torrent-search?id=" + id)
       .then((r) => {
         const torrent = r.data.data;
         const movie = torrent.movies[0];
@@ -514,4 +514,4 @@ app.get("/logout", (req, res) => {
 });
 
 app.listen(3000);
-// console.log("http://185.186.246.43:3000");
+// console.log("http://localhost:3000");
