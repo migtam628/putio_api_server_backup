@@ -41,7 +41,7 @@ app.get("/stream", (req, res) => {
           let seasons = files.filter((file) => file.name.includes(s));
           let episodes = seasons.filter((file) => file.name.includes(e));
           let file_type = episodes.filter((file) => file.file_type === "VIDEO");
-          let file_id = file_type[0]?.id;
+          let file_id = file_type[0].id;
           // console.log(files);
           if (file_id) {
             console.log("id available");
@@ -123,7 +123,7 @@ app.get("/stream", (req, res) => {
           let files = r.body.files;
           let videos = files.filter((file) => file.file_type === "VIDEO");
           let movie = videos.find((file) => file.name.includes(quality));
-          let file_id = movie?.id;
+          let file_id = movie.id;
           if (file_id) {
             API.Files.DownloadLinks({ ids: [file_id] })
               .then(({ status, body, data }) => {
@@ -359,7 +359,7 @@ app.get("/media_stream", (req, res) => {
       .then((r) => {
         const torrent = r.data.data;
         const movie = torrent.movies[0];
-        movie?.torrents.forEach((torrent) => {
+        movie.torrents.forEach((torrent) => {
           if (torrent.quality === quality) {
             const url = torrent.url;
             setTimeout(() => {
